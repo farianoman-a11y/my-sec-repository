@@ -1,0 +1,141 @@
+import React, { useEffect } from "react";
+
+// Converted from static HTML to a React component to fix the syntax error
+// This file is a single-file React component (JS) you can drop into a Next.js/CRA app.
+
+export default function PersonalPage() {
+  useEffect(() => {
+    // Add click interaction for cards
+    const clickHandler = function () {
+      // `this` is the card element
+      // apply a quick scale feedback
+      this.style.transform = "scale(0.95)";
+      setTimeout(() => (this.style.transform = ""), 150);
+    };
+
+    const cards = Array.from(document.querySelectorAll('.skill-card, .project-card'));
+    cards.forEach((c) => c.addEventListener('click', clickHandler));
+
+    // Intersection observer for reveal animation
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.style.opacity = '1';
+          entry.target.style.transform = 'translateY(0)';
+        }
+      });
+    });
+
+    document.querySelectorAll('.section').forEach((section) => observer.observe(section));
+
+    return () => {
+      cards.forEach((c) => c.removeEventListener('click', clickHandler));
+      observer.disconnect();
+    };
+  }, []);
+
+  return (
+    <div>
+      <style>{`
+        /* --- Same style rules as your template --- */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Arial', sans-serif; line-height: 1.6; color: #333; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); min-height: 100vh; }
+        .container { max-width: 1200px; margin: 0 auto; padding: 20px; }
+        header { background: linear-gradient(135deg, #ff6b6b, #ee5a24); color: white; text-align: center; padding: 4rem 2rem; border-radius: 20px; margin-bottom: 2rem; box-shadow: 0 10px 30px rgba(0,0,0,0.3); animation: fadeInDown 1s ease-out; }
+        h1 { font-size: 3.5rem; margin-bottom: 1rem; text-shadow: 2px 2px 4px rgba(0,0,0,0.3); animation: pulse 2s infinite; }
+        .subtitle { font-size: 1.5rem; opacity: 0.9; margin-bottom: 2rem; }
+        .profile-img { width: 150px; height: 150px; border-radius: 50%; border: 5px solid white; box-shadow: 0 5px 15px rgba(0,0,0,0.3); margin: 0 auto 2rem; background: linear-gradient(45deg, #ff9a9e, #fecfef); display: flex; align-items: center; justify-content: center; font-size: 4rem; animation: bounce 2s infinite; }
+        .section { background: white; margin: 2rem 0; padding: 2.5rem; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); animation: slideInUp 0.8s ease-out; opacity: 0; transform: translateY(20px); transition: all 0.6s ease; }
+        .section h2 { color: #667eea; font-size: 2.5rem; margin-bottom: 1.5rem; text-align: center; position: relative; }
+        .section h2::after { content: ''; position: absolute; bottom: -10px; left: 50%; transform: translateX(-50%); width: 100px; height: 4px; background: linear-gradient(90deg, #ff6b6b, #ee5a24); border-radius: 2px; }
+        .about-content { background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%); padding: 2rem; border-radius: 15px; margin: 1rem 0; font-size: 1.1rem; line-height: 1.8; }
+        .skills-grid, .project-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.5rem; margin: 2rem 0; }
+        .skill-card, .project-card { padding: 2rem; border-radius: 15px; text-align: center; transition: transform 0.3s ease, box-shadow 0.3s ease; cursor: pointer; }
+        .skill-card { background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%); }
+        .skill-card:hover { transform: translateY(-10px) scale(1.05); box-shadow: 0 15px 40px rgba(0,0,0,0.2); }
+        .skill-card h3 { color: #d63031; font-size: 1.5rem; margin-bottom: 1rem; }
+        .project-card { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; }
+        .project-card:hover { transform: rotate(2deg) scale(1.05); }
+        .project-card h3 { font-size: 1.8rem; margin-bottom: 1rem; color: #ffeaa7; }
+        .contact-info { background: linear-gradient(135deg, #74b9ff 0%, #0984e3 100%); color: white; padding: 2rem; border-radius: 15px; text-align: center; }
+        .contact-item { display: inline-block; margin: 1rem; padding: 1rem 2rem; background: rgba(255,255,255,0.2); border-radius: 50px; transition: all 0.3s ease; }
+        .contact-item:hover { background: rgba(255,255,255,0.3); transform: scale(1.1); }
+        footer { text-align: center; padding: 2rem; background: linear-gradient(135deg, #2d3436 0%, #636e72 100%); color: white; border-radius: 20px; margin-top: 2rem; }
+        @keyframes fadeInDown { from {opacity:0; transform:translateY(-50px);} to {opacity:1; transform:translateY(0);} }
+        @keyframes slideInUp { from {opacity:0; transform:translateY(50px);} to {opacity:1; transform:translateY(0);} }
+        @keyframes pulse { 0%,100% {transform:scale(1);} 50% {transform:scale(1.05);} }
+        @keyframes bounce { 0%,20%,50%,80%,100% {transform:translateY(0);} 40% {transform:translateY(-10px);} 60% {transform:translateY(-5px);} }
+        @media (max-width: 768px) { h1 { font-size: 2.5rem; } .section { padding: 1.5rem; } .skills-grid, .project-grid { grid-template-columns: 1fr; } }
+      `}</style>
+
+      <div className="container">
+        <header>
+          <div className="profile-img">🌱</div>
+          <h1>Fria Nancy</h1>
+          <p className="subtitle">Human Rights Advocate • Tenant Organizer • Multifaith Builder</p>
+        </header>
+
+        <section className="section">
+          <h2>About Me</h2>
+          <div className="about-content">
+            <p>I’m a passionate community organizer and multifaith advocate, weaving together spirituality and social justice. My journey began with religious spirituality, where I learned that compassion can be cultivated through practice and applied to the liberation of marginalized communities.</p>
+            <p>I’m currently active in tenant organizing with Chhaya CDC and DSA, working to resist evictions and empower communities. My vision is to create spiritual and justice-centered spaces that nurture compassion, solidarity, and collective liberation.</p>
+          </div>
+        </section>
+
+        <section className="section">
+          <h2>Skills & Expertise</h2>
+          <div className="skills-grid">
+            <div className="skill-card">
+              <h3>Community Organizing</h3>
+              <p>Tenant campaigns, strike-ready unions, small group facilitation, and grassroots mobilization.</p>
+            </div>
+            <div className="skill-card">
+              <h3>Human Rights Advocacy</h3>
+              <p>Experience with international fellowships, policy analysis, and connecting spirituality to justice work.</p>
+            </div>
+            <div className="skill-card">
+              <h3>Multifaith & Spiritual Work</h3>
+              <p>Interfaith dialogue, building spiritual-based institutions, and integrating compassion into activism.</p>
+            </div>
+            <div className="skill-card">
+              <h3>Research & Writing</h3>
+              <p>Policy research, campaign development, creative writing, and building radical educational tools.</p>
+            </div>
+          </div>
+        </section>
+
+        <section className="section">
+          <h2>Featured Projects</h2>
+          <div className="project-grid">
+            <div className="project-card">
+              <h3>🏠 Tenant Organizing Journal</h3>
+              <p>A living record of building-level campaigns, tenant demands, and lessons learned from grassroots struggles.</p>
+            </div>
+            <div className="project-card">
+              <h3>🕊️ Jannah on Earth Blueprint</h3>
+              <p>A spiritual community-building framework that integrates prophetic wisdom, compassion, and justice in organizing.</p>
+            </div>
+            <div className="project-card">
+              <h3>📖 Revolutionary Reading List</h3>
+              <p>A curated list of radical, anarchist, and justice-centered works to spark critical thinking and organizing praxis.</p>
+            </div>
+          </div>
+        </section>
+
+        <section className="section">
+          <h2>Let's Connect</h2>
+          <div className="contact-info">
+            <div className="contact-item">📧 your.email@example.com</div>
+            <div className="contact-item">💼 LinkedIn: /in/yourprofile</div>
+            <div className="contact-item">🌐 Personal Projects & Zines (coming soon!)</div>
+          </div>
+        </section>
+
+        <footer>
+          <p>&copy; 2025 Fria Nancy. Building love, compassion, and justice ✊</p>
+        </footer>
+      </div>
+    </div>
+  );
+}
